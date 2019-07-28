@@ -19,6 +19,7 @@ export default {
   text-align: center;
   font-size: 16px;
   background-color: #fff;
+  z-index: 999;
 }
 </style>
 

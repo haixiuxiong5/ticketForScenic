@@ -31,6 +31,7 @@ export default {
   padding-top: 4px;
   overflow: hidden;
   border-top: 1px solid #f0f0f0;
+  z-index: 999;
 }
 
 .navitem {

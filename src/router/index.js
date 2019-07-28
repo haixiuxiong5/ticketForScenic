@@ -4,6 +4,8 @@ import Home from '@/layout/home'
 import IndexNav from '@/pages/indexnav'
 import Index from '@/pages/index'
 import Mine from '@/pages/mine'
+import ScenicDetail from '@/pages/scenicDetail'
+import TicketDetail from '@/pages/ticketDetail'
 
 Vue.use(Router)
 
@@ -12,17 +14,25 @@ export default new Router({
     path: '/',
     component: Home,
     children: [{
-      path: '/',
-      component: IndexNav,
-      children: [{
-          path: '/',
-          component: Index,
-        },
-        {
-          path: '/mine',
-          component: Mine,
-        }
-      ]
-    }]
+        path: '/',
+        component: IndexNav,
+        children: [{
+            path: '/',
+            component: Index,
+          },
+          {
+            path: '/mine',
+            component: Mine,
+          }
+        ]
+      },
+      {
+        path: '/scenicDetail',
+        component: ScenicDetail
+      }, {
+        path: '/ticketDetail',
+        component: TicketDetail
+      }
+    ]
   }]
 })
