@@ -6,6 +6,7 @@ import Index from '@/pages/index'
 import Mine from '@/pages/mine'
 import ScenicDetail from '@/pages/scenicDetail'
 import TicketDetail from '@/pages/ticketDetail'
+import CreateOrder from '@/pages/createOrder'
 
 Vue.use(Router)
 
@@ -32,6 +33,10 @@ export default new Router({
       }, {
         path: '/ticketDetail',
         component: TicketDetail
+      },
+      {
+        path: '/createOrder',
+        component: CreateOrder
       }
     ]
   }]

@@ -3,13 +3,17 @@
     <h1 class="productname">
       <p>{{ticketDetail.productName}}</p>
       <p>
-        <van-tag type="primary" round>{{subType}}</van-tag>
+        <van-tag
+          type="primary"
+          round
+        >{{subType}}</van-tag>
         <van-tag
           type="primary"
           round
         >{{ticketDetail.drawType==1?'实体票':(ticketDetail.drawType==8?'预付电子票':'')}}</van-tag>
       </p>
     </h1>
+
     <div class="card">
       <h5 class="cardtitle">有效期</h5>
       <div>{{ticketDetail.indate}}</div>
@@ -25,18 +29,34 @@
     <div class="card">
       <h5 class="cardtitle">预订须知</h5>
       <div>
-        <p v-for="(item,index) in ticketDetail.bookNotice" :key="index">{{item}}</p>
+        <p
+          v-for="(item,index) in ydxuzhi"
+          :key="index"
+        >
+          <span
+            style="color:#333;"
+            v-if="item.label"
+          >{{item.label}}：</span>
+          {{item.value}}
+        </p>
       </div>
     </div>
     <div class="card">
       <h5 class="cardtitle">其他说明</h5>
-      <div>{{ticketDetail.info}}</div>
+      <div v-html="ticketDetail.info"></div>
     </div>
+    <van-submit-bar
+      :price="ticketDetail.salePrice*100"
+      button-text="马上预定"
+      label=" "
+      @submit="onSubmit"
+    />
   </div>
 </template>
 <script>
 import axios from "axios";
 import { Tag } from "vant";
+import { SubmitBar } from "vant";
 export default {
   data() {
     return {
@@ -45,7 +65,8 @@ export default {
     };
   },
   components: {
-    [Tag.name]: Tag
+    [Tag.name]: Tag,
+    [SubmitBar.name]: SubmitBar
   },
 
   created() {
@@ -64,6 +85,22 @@ export default {
       } else if (subtype == 4) {
         return "专项";
       }
+    },
+    ydxuzhi() {
+      let that = this;
+      let bookNotice = that.ticketDetail.bookNotice;
+      let newNotice = [];
+      for (let i of bookNotice) {
+        if (i != "") {
+          let index = i.indexOf(":") == -1 ? i.indexOf("：") : i.indexOf(":");
+          let obj = {
+            label: i.substring(0, index),
+            value: i.substring(index + 1)
+          };
+          newNotice.push(obj);
+        }
+      }
+      return newNotice;
     }
   },
   methods: {
@@ -96,13 +133,21 @@ export default {
           console.log(that.ticketDetail);
         }
       });
+    },
+    onSubmit() {
+      this.$router.push({
+        path: "/createOrder",
+        query: {
+          id: this.ticketDetail.productId
+        }
+      });
     }
   }
 };
 </script>
 <style scoped>
 .ticketdetail {
-  padding: 0 15px;
+  padding: 0 15px 50px;
 }
 .productname {
   padding: 10px 0;
@@ -118,7 +163,7 @@ export default {
 .cardtitle {
   padding: 2px 0;
   font-weight: normal;
-  font-size: 13px;
+  font-size: 14px;
   color: #333;
 }
 </style>

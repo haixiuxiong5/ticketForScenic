@@ -1,6 +1,10 @@
 <template>
   <div class="scenicdetail">
-    <el-image fit="cover" :src="scenicDetail.defaultPic" class="scenicpic"></el-image>
+    <el-image
+      fit="cover"
+      :src="scenicDetail.defaultPic"
+      class="scenicpic"
+    ></el-image>
     <div class="card baseinfo">
       <ul>
         <li>
@@ -25,15 +29,25 @@
       <h6 class="cardtitle">景点门票</h6>
       <div class="disticketlist">
         <ul>
-          <li v-for="(item,index) in scenicDetail.disTickets" :key="index">
-            <p class="ticketname">{{item.productName}}</p>
+          <li
+            v-for="(item,index) in scenicDetail.disTickets"
+            :key="index"
+          >
+            <p class="ticketname">
+              <router-link :to="{path:'/ticketDetail',query:{id:item.productId}}">{{item.productName}}</router-link>
+            </p>
             <div class="ticketprice">
               <p>
                 ￥
                 <span class="saleprice">{{item.salePrice}}</span>
               </p>
               <p class="webprice">￥{{item.webPrice}}</p>
-              <el-button type="warning" round size="mini" class="ydbtn">预订</el-button>
+              <el-button
+                type="warning"
+                round
+                size="mini"
+                class="ydbtn"
+              >预订</el-button>
             </div>
           </li>
         </ul>
@@ -50,7 +64,10 @@
           :name="index"
         >
           <div>
-            <p v-for="(xuitem,index) in split(item.value)" :key="index">{{xuitem}}</p>
+            <p
+              v-for="(xuitem,index) in split(item.value)"
+              :key="index"
+            >{{xuitem}}</p>
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -61,7 +78,10 @@
     </div>
     <div class="card">
       <h6 class="cardtitle">景点介绍</h6>
-      <div v-html="scenicDetail.scenicDescription" class="scenicdes"></div>
+      <div
+        v-html="scenicDetail.scenicDescription"
+        class="scenicdes"
+      ></div>
     </div>
   </div>
 </template>

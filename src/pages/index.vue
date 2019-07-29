@@ -13,9 +13,20 @@
       style="overflow-y:auto;height:calc(100vh - 138px);"
     >
       <ul>
-        <li class="scenicitem" v-for="item in scenicList" :key="item.scenicId">
-          <router-link :to="{path:'/scenicDetail',query:{id:item.scenicId}}" class="scenicinfo">
-            <el-image :src="item.newPicUrl" fit="cover" class="scenicpic"></el-image>
+        <li
+          class="scenicitem"
+          v-for="item in scenicList"
+          :key="item.scenicId"
+        >
+          <router-link
+            :to="{path:'/scenicDetail',query:{id:item.scenicId}}"
+            class="scenicinfo"
+          >
+            <el-image
+              :src="item.newPicUrl"
+              fit="cover"
+              class="scenicpic"
+            ></el-image>
             <div class="scenicsection">
               <div>
                 <span class="scenicname">{{item.scenicName}}</span>
@@ -30,14 +41,18 @@
           </router-link>
           <div class="dis_list">
             <ul>
-              <li v-for="(ditem,index) in item.dis_list" :key="index" v-if="index<3">
+              <li
+                v-for="(ditem,index) in item.dis_list"
+                :key="index"
+                v-if="index<3"
+              >
                 <router-link
                   :to="{path:'/ticketDetail',query:{id:ditem.productId}}"
                   class="dis_item"
                 >
                   <div class="ticketname">{{ditem.productName}}</div>
                   <div class="ticketprice">
-                    <label>门市价</label>
+                    <label>景点价</label>
                     <p class="webprice">{{ditem.webPrice}}</p>
                   </div>
                   <div class="ticketprice">
@@ -51,7 +66,10 @@
         </li>
       </ul>
       <!-- <p v-if="loading">加载中...</p> -->
-      <p v-if="noMore" style="padding:20px;text-align:center;">没有更多了</p>
+      <p
+        v-if="noMore"
+        style="padding:20px;text-align:center;"
+      >没有更多了</p>
     </div>
   </div>
 </template>
