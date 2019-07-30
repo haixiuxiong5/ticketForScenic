@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 import '@/assets/iconfont/iconfont.css'
+import VeeValidate from './utils/validate'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

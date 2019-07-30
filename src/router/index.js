@@ -7,6 +7,8 @@ import Mine from '@/pages/mine'
 import ScenicDetail from '@/pages/scenicDetail'
 import TicketDetail from '@/pages/ticketDetail'
 import CreateOrder from '@/pages/createOrder'
+import SuccessCreate from '@/pages/successCreate'
+import OrderDetail from '@/pages/orderDetail'
 
 Vue.use(Router)
 
@@ -37,6 +39,15 @@ export default new Router({
       {
         path: '/createOrder',
         component: CreateOrder
+      },
+      {
+
+        path: '/successCreate',
+        component: SuccessCreate
+      },
+      {
+        path: '/orderDetail',
+        component: OrderDetail
       }
     ]
   }]
