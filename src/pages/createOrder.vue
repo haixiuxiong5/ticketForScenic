@@ -270,7 +270,8 @@ export default {
     getTicketInfo() {
       let that = this;
       Toast.loading({
-        message: "加载中..."
+        message: "加载中...",
+        duration: 1000
       });
       axios({
         method: "post",
@@ -342,8 +343,12 @@ export default {
             }
           })
             .then(res => {
-              if (res.status == 200) {
-                Toast.clear();
+              if (
+                res.status == 200 &&
+                res.data.showapi_res_body.ret_code != 0
+              ) {
+                Toast.fail(res.data.showapi_res_body.remark);
+              } else {
                 console.log(res.data.showapi_res_body.orderId);
                 that.$router.push({
                   path: "/successCreate",

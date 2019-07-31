@@ -2,7 +2,7 @@
   <div class="home">
     <!-- <Header></Header> -->
     <van-nav-bar
-      title="标题"
+      :title="$route.name"
       :left-arrow="backShow"
       @click-left="onClickLeft"
     />
@@ -25,7 +25,8 @@ export default {
     [NavBar.name]: NavBar
   },
   created() {
-    this.backShow = this.$route.path === "/" ? false : true
+    this.backShow = this.$route.path === "/" ? false : true;
+    console.log(this.$route);
   },
   watch: {
     $route(now, old) {
@@ -38,7 +39,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     }
   }
 };

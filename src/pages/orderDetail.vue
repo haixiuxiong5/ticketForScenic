@@ -20,6 +20,21 @@
           title="订购时间"
           :value="orderInfo.orderTime"
         />
+        <van-cell
+          v-if="orderInfo.cancelRemark"
+          title="取消原因"
+          :value="orderInfo.cancelRemark"
+        />
+        <van-cell
+          v-if="orderInfo.causeContent"
+          title="退票原因"
+          :value="orderInfo.causeContent"
+        />
+        <van-cell
+          v-if="orderInfo.refund"
+          title="可退金额"
+          :value="orderInfo.refund"
+        />
       </van-cell-group>
     </div>
     <div class="panel">
@@ -93,11 +108,32 @@
         />
       </van-cell-group>
     </div> -->
+    <div v-if="orderInfo.orderStatus=='待付款'||'待确认'">
+      <van-submit-bar
+        :price="orderInfo.amoutPrice*100"
+        button-text="立即支付"
+        @submit="onPay"
+      >
+        <van-button
+          style="margin-left:15px;"
+          type="default"
+          size="small"
+          @click="orderCancel"
+        >取消订单</van-button>
+      </van-submit-bar>
+    </div>
+    <div v-if="orderInfo.orderStatus=='已完成'">
+      <van-submit-bar
+        button-text="退票"
+        @submit="returnTicket"
+      >
+      </van-submit-bar>
+    </div>
   </div>
 </template>
 <script>
 import axios from "axios";
-import { Cell, CellGroup, Toast } from "vant";
+import { Cell, CellGroup, Toast, SubmitBar, Button } from "vant";
 export default {
   data() {
     return {
@@ -108,7 +144,9 @@ export default {
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
-    [Toast.name]: Toast
+    [Toast.name]: Toast,
+    [SubmitBar.name]: SubmitBar,
+    [Button.name]: Button
   },
   created() {
     this.getOrderInfo();
@@ -117,7 +155,8 @@ export default {
     getOrderInfo() {
       let that = this;
       Toast.loading({
-        message: "加载中..."
+        message: "加载中...",
+        duration: 1000
       });
       axios({
         method: "post",
@@ -137,12 +176,26 @@ export default {
         .catch(err => {
           console.log(err);
         });
-    }
+    },
+    onPay() {
+      this.$router.push({
+        path: "/orderPay",
+        query: { id: this.orderId }
+      });
+    },
+    orderCancel() {
+      this.$router.push({
+        path: "/orderCancel",
+        query: { id: this.orderId }
+      });
+    },
+    returnTicket() {}
   }
 };
 </script>
 <style scoped>
 .orderdetail {
+  padding-bottom: 60px;
   background-color: #f5f5f5;
 }
 
@@ -151,6 +204,7 @@ export default {
   font-weight: normal;
   font-size: 16px;
 }
+/* 1227856973 */
 </style>
 
 

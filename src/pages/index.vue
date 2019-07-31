@@ -2,8 +2,11 @@
   <div class="indexcont">
     <div class="searchwrap">
       <div class="searchinn">
-        <span class="city">北京</span>
-        <span class="el-icon-search search">搜索城市</span>
+        <span class="city">{{city}}</span>
+        <span
+          class="el-icon-search search"
+          @click="searchCity"
+        >搜索城市</span>
       </div>
     </div>
     <div
@@ -71,6 +74,16 @@
         style="padding:20px;text-align:center;"
       >没有更多了</p>
     </div>
+    <!-- <van-popup
+      v-model="chooseCity"
+      position="bottom"
+    >
+      <van-area
+        :area-list="areaList"
+        :columns-num="2"
+      />
+    </van-popup> -->
+
   </div>
 </template>
 <script>
@@ -78,6 +91,8 @@ import axios from "axios";
 export default {
   data() {
     return {
+      chooseCity: false,
+      city: this.$route.query.city || "北京",
       scenicList: [],
       pageIndex: 1,
       noMore: false,
@@ -104,15 +119,14 @@ export default {
       const loading = that.loading();
       that.busy = true;
       axios({
-        // method: "post",
-        method: "get",
-        // url: "http://route.showapi.com/1681-1",
-        url:
-          "https://www.easy-mock.com/mock/5d3c17a196f5a648a8495f24/scenic/sceniclist",
+        method: "post",
+        url: "http://route.showapi.com/1681-1",
+        // url:
+        //   "https://www.easy-mock.com/mock/5d3c17a196f5a648a8495f24/scenic/sceniclist",
         params: {
-          // showapi_appid: "100774",
-          // showapi_sign: "a236dc73662b4086a798325e2f1a5782",
-          // key: "北京",
+          showapi_appid: "100774",
+          showapi_sign: "a236dc73662b4086a798325e2f1a5782",
+          key: that.city,
           page: that.pageIndex,
           pageSize: "10"
         }
@@ -123,11 +137,13 @@ export default {
               loading.close();
             }, 1000);
             // console.log(res.data.showapi_res_body.result);
-            if (res.data.data.length == 0) {
+            if (res.data.showapi_res_body.result == 0) {
               that.noMore = true;
               return;
             }
-            that.scenicList = that.scenicList.concat(res.data.data);
+            that.scenicList = that.scenicList.concat(
+              res.data.showapi_res_body.result
+            );
             that.pageIndex++;
           }
           console.log(this.scenicList);
@@ -136,6 +152,11 @@ export default {
           console.log(res);
         });
       that.busy = false;
+    },
+    searchCity() {
+      this.$router.push({
+        path: "/selectCity"
+      });
     }
   }
 };
